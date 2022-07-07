@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trackit</title>
+    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="lib/jquery-ui.css" />
+ 
+</head>
+<body>
+
+    <!-- ----------------------------------------------------------------- -->
+     <!-- Add new website dialog -->
+    <div id="add-dialog-form" title="Add new website">
+        <p class="validateTips">All form fields are required.</p>
+    
+        <form>
+        <fieldset>
+            <ul>
+            <li>
+                <label for="url">URL</label>
+                <input type="text" name="URL" id="addurl" required placeholder="https://example.com" class="text ui-widget-content ui-corner-all">
+            </li>
+            <li style="padding-top:0.5em">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="addname" required placeholder="Example 1" class="text ui-widget-content ui-corner-all">
+            </li>
+            
+            <li style="padding-top:0.5em">
+                <label for="method">Method</label>
+                <select id="addmethod">
+                    <option>HEAD</option>
+                    <option>GET</option>
+                    <option>POST</option>
+                </select>
+            </li>
+
+            <li style="padding-top:0.5em">
+                <label for="timeout">Timeout (ms)</label>
+                <input type="number" name="timeout" id="addtimeout" value="4000" min="2000" class="text ui-widget-content ui-corner-all" style="width: 5em">
+            </li>
+
+            <li id="addcontentrow" style="display:none; padding-top:0.5em">
+                <label>Content Type</label>
+                <input type="text" name="content" id="addcontentinput" required placeholder="application/json" class="text ui-widget-content ui-corner-all">
+            </li>
+
+            <li id="addbodyrow" style="display:none;">
+                <label>Body</label>
+                <input type="text" name="body" id="addbodyinput" required placeholder="{'key' : value}" class="text ui-widget-content ui-corner-all">
+            </li>
+            
+            
+            </ul>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+        </form>
+    </div>
+
+
+    <!-- ----------------------------------------------------------------- -->
+
+    <!-- Edit website dialog -->
+    <div id="edit-dialog-form" title="Edit website">
+        <p class="validateTips">All form fields are required.</p>
+    
+        <form>
+        <fieldset>
+            <ul>
+            <li>
+                <label for="url">URL</label>
+                <input type="text" name="URL" id="editurl" required placeholder="https://example.com" class="text ui-widget-content ui-corner-all">
+            </li>
+            <li style="padding-top:0.5em">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="editname" required placeholder="Example 1" class="text ui-widget-content ui-corner-all">
+            </li>
+            
+            <li style="padding-top:0.5em">
+                <label for="method">Method</label>
+                <select id="editmethod">                
+                    <option value="HEAD">HEAD</option>
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                </select>
+            </li>
+
+            <li style="padding-top:0.5em">
+                <label for="timeout">Timeout (ms)</label>
+                <input type="number" name="timeout" id="edittimeout" value="4000" min="2000" class="text ui-widget-content ui-corner-all" style="width: 5em">
+            </li>
+
+            <li id="editcontentrow" style="display:none; padding-top:0.5em">
+                <label>Content Type</label>
+                <input type="text" name="content" id="editcontentinput" required placeholder="application/json" class="text ui-widget-content ui-corner-all">
+            </li>
+
+            <li id="editbodyrow" style="display:none;">
+                <label>Body</label>
+                <input type="text" name="body" id="editbodyinput" required placeholder="{'key' : value}" class="text ui-widget-content ui-corner-all">
+            </li>
+            
+            
+            </ul>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+        </form>
+    </div>
+
+    <!-- ----------------------------------------------------------------- -->
+    
+    <div class="container mt-3" style="width: 800px;">
+        <button id="addRowButton" style="font-size:18px; color: green; text-align: center; position: absolute; border: 2px solid #E8E8E8";>Add <i class="fa fa-plus"></i></button>
+        
+        <h2 class="text-center">Settings</h2>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="text-align:center">Name</th>
+                <th style="text-align:center">URL</th>
+                <th style="text-align:center">Method</th>
+                <th style="text-align:center">Timeout (ms)</th>
+                <th style="text-align:center">EDIT</th>
+                <th style="text-align:center">DEL</th>
+            </tr>
+            </thead>
+            <tbody id="settings_table_body">
+            </tbody>
+        </table>
+
+        <form>    
+            <label for="url">Ping Interval (sec)</label>
+            <input type="number" name="pingInterval" id="pingInterval" value="30" min="5" style="width: 5em">
+            <button id="pingSaveButton">Save</button>
+        </form>
+
+    </div>
+</body>
+
+
+<script type="module" src="options.js"></script>
