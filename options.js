@@ -7,6 +7,7 @@ import { getDataFromStorage, getPingFromStorage, PING_KEY } from './storage.js';
 const ADD_DIALOG = "add-dialog-form";
 const EDIT_DIALOG = "edit-dialog-form";
 const DISPLAY_URL_LENGTH = 40;
+const PING_INTERVAL_MIN_VALUE = 10;
 
 let addDialog = getDialog(ADD_DIALOG);
 let editDialog = getDialog(EDIT_DIALOG);
@@ -287,6 +288,7 @@ function displayPingValue(pingInterval) {
 async function savePingToStorage() {
 
     var pingInterval = document.getElementById('pingInterval').value;
+    if(pingInterval < PING_INTERVAL_MIN_VALUE) return;
     chrome.storage.sync.set({ [PING_KEY]:  pingInterval}, function(){
         chrome.runtime.sendMessage({ greeting: "update-alarm" }, function (response) {
             if(chrome.runtime.lastError) {
