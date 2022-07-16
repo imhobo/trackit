@@ -2,7 +2,7 @@
     Methods related to fetching data from storage
 */
 
-export const DEFAULT_PING_INTERVAL = 10; //seconds
+export const DEFAULT_PING_INTERVAL = 60; //seconds
 export const DATA_KEY = 'data';
 export const PING_KEY = 'ping_interval';
 export const LAST_REFRESH_KEY = 'last_refresh';
