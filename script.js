@@ -3,7 +3,7 @@
 */
 
 import {getPopupResponseFromStorage, LAST_REFRESH_KEY, META_KEY, PING_KEY } from './storage.js';
-import { getTime } from './util.js';
+import { getTime, requestManualRefresh } from './util.js';
 
 chrome.runtime.onMessage.addListener((request, sender, reply) => {
     
@@ -58,12 +58,7 @@ function addMetaToTable(meta) {
     refreshNowImg.title = "Refresh now"
     refreshNowCell.style.textAlign = "center"
     refreshNowImg.onclick = function () {
-        //sending message to background service to fetch data and refresh popup
-        chrome.runtime.sendMessage({ greeting: "manual-refresh" }, function (response) {
-            if(chrome.runtime.lastError) {
-                //Background service is not active and no one received the message
-            } 
-        });
+        requestManualRefresh();
     };
 
     refreshNowImg.onmouseover = function () {

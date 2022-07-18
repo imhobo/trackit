@@ -3,11 +3,12 @@
 */
 
 import { getDataFromStorage, getPingFromStorage, PING_KEY } from './storage.js';
+import { requestManualRefresh } from './util.js';
 
 const ADD_DIALOG = "add-dialog-form";
 const EDIT_DIALOG = "edit-dialog-form";
 const DISPLAY_URL_LENGTH = 40;
-const PING_INTERVAL_MIN_VALUE = 10;
+const PING_INTERVAL_MIN_VALUE = 60;
 
 let addDialog = getDialog(ADD_DIALOG);
 let editDialog = getDialog(EDIT_DIALOG);
@@ -116,6 +117,7 @@ async function saveWebsite(id, dialog) {
 
     saveDataToStorage(data);
     displaySettingsTable(data);
+    requestManualRefresh();
 
     if(saveStatus) $(dialog).dialog( "close" );
 }
@@ -198,6 +200,7 @@ function displaySettingsRow(record) {
     delCell.style.textAlign = "center"
     delImg.onclick = function () {
         deleteRow(delImg, record);
+        requestManualRefresh();
     };
     delCell.appendChild(delImg);
 
