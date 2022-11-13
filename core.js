@@ -45,11 +45,12 @@ async function getPopupResponse(data, ping) {
         try {
             let time1 = performance.now();
             var options = {"method": record.method};
+            options.headers = {};
             if(record.method === "POST") {
-                options.headers = {};
                 options.headers['Content-Type'] = record.contentType;
                 options.body = record.body;
             }
+            options.headers['Authorization'] =  record.auth;
             res = await fetchWithTimeout (record.url, options, record.timeout);
             let time2 = performance.now();
             var latency = time2 - time1;    
@@ -59,7 +60,8 @@ async function getPopupResponse(data, ping) {
             response.latency = "-";
             console.log(error);
         }
-    
+
+        console.log(record.name + " : " + res.status);
         if(res !== "NULL" && res.status === 200) {
             response.status = "active";
         }
@@ -85,10 +87,16 @@ async function fetchWithTimeout(resource, options = {}, timeoutValue) {
      
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
-    const response = await fetch(resource, {
-      ...options,
-      signal: controller.signal  
-    });
+    var response = {};
+    try {
+        response = await fetch(resource, {
+          ...options,
+          signal: controller.signal  
+        });
+    } catch(error) {
+        console.log("Couldn't fetch " + resource);
+    }
+
     clearTimeout(id);
     return response;
 }

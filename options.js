@@ -30,7 +30,7 @@ function getDialog(id) {
     var prefix = id === ADD_DIALOG ? "add" : "edit";
     var dialog = $("#" + id).dialog({
         autoOpen: false,
-        height: 400,
+        height: 450,
         width: 400,
         modal: true,
         dialogClass: "no-close",
@@ -47,6 +47,7 @@ function getDialog(id) {
             $("#" + id + " input[id=" + prefix + "name]").val("");
             $("#" + id + " select[id=" + prefix + "method]").val("HEAD"); 
             $("#" + id + " input[id=" + prefix + "timeout]").val("4000");
+            $("#" + id + " input[id=" + prefix + "auth]").val("");
             $("#" + id + " input[id=" + prefix + "contentinput]").val("");
             $("#" + id + " input[id=" + prefix + "bodyinput]").val("");
             editRecord = null;
@@ -73,6 +74,7 @@ async function saveWebsite(id, dialog) {
     var displayName = document.getElementById(prefix + 'name').value;
     var method = document.getElementById(prefix + 'method').value;
     var timeout = document.getElementById(prefix + 'timeout').value;
+    var auth = document.getElementById(prefix + 'auth').value;
     var contentType = document.getElementById(prefix + 'contentinput').value;
     var body = document.getElementById(prefix + 'bodyinput').value;
     var record = {"url":url, "name": displayName, "method": method, "timeout": timeout};
@@ -90,6 +92,8 @@ async function saveWebsite(id, dialog) {
         saveStatus = false;
         return;
     }
+
+    record.auth = auth;
     record.url = validateAndFixUrl(url);
 
     var data = await getDataFromStorage();
@@ -222,9 +226,10 @@ function setDisplayEditRowValues(record) {
     $("#edit-dialog-form input[id=editname]").val(record.name);
     $("#edit-dialog-form select[id=editmethod]").val(record.method); 
     $("#edit-dialog-form input[id=edittimeout]").val(record.timeout);
+    $("#edit-dialog-form input[id=editauth]").val(record.auth);
     $("#edit-dialog-form input[id=editcontentinput]").val(record.contentType);
     $("#edit-dialog-form input[id=editbodyinput]").val(record.body);
-    if(record.method === "POST")setDialogPostFields("block", "edit");
+    if(record.method === "POST")setDialogPostFields("list-item", "edit");
     //Remember the record before user edits it.
     editRecord = record;
 }
@@ -317,7 +322,7 @@ function isEmpty(obj) {
     var prefix = selectObject.target.id.includes("add") ? "add" : "edit";
     var value = selectObject.target.value;  
     if(value === "POST") {
-        setDialogPostFields("block", prefix);
+        setDialogPostFields("list-item", prefix);
     }
     else {
         setDialogPostFields("none", prefix);

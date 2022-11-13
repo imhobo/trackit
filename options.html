@@ -44,14 +44,19 @@
                 <input type="number" name="timeout" id="addtimeout" value="4000" min="2000" class="text ui-widget-content ui-corner-all" style="width: 5em">
             </li>
 
+            <li style="padding-top:0.5em">
+                <label for="auth">Authorization (optional)</label><br>
+                <input type="text" name="auth" id="addauth" required placeholder="Bearer ACCESS_TOKEN" class="text ui-widget-content ui-corner-all" style="width: 15em">
+            </li>
+
             <li id="addcontentrow" style="display:none; padding-top:0.5em">
                 <label>Content Type</label>
                 <input type="text" name="content" id="addcontentinput" required placeholder="application/json" class="text ui-widget-content ui-corner-all">
             </li>
 
-            <li id="addbodyrow" style="display:none;">
+            <li id="addbodyrow" style="display:none; padding-top:0.5em">
                 <label>Body</label>
-                <input type="text" name="body" id="addbodyinput" required placeholder="{'key' : value}" class="text ui-widget-content ui-corner-all">
+                <input type="text" name="body" id="addbodyinput" required placeholder="{'key' : 'value'}" class="text ui-widget-content ui-corner-all">
             </li>
             
             
@@ -93,6 +98,11 @@
             <li style="padding-top:0.5em">
                 <label for="timeout">Timeout (ms)</label>
                 <input type="number" name="timeout" id="edittimeout" value="4000" min="2000" class="text ui-widget-content ui-corner-all" style="width: 5em">
+            </li>
+
+            <li style="padding-top:0.5em">
+                <label for="auth">Authorization (optional)</label><br>
+                <input type="text" name="auth" id="editauth" required placeholder="Bearer ACCESS_TOKEN" class="text ui-widget-content ui-corner-all" style="width: 15em">
             </li>
 
             <li id="editcontentrow" style="display:none; padding-top:0.5em">
